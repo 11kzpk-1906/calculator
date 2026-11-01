@@ -22,14 +22,25 @@
     expressionEl.textContent = expr || '0';
   }
 
+  function readHistory(){
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed.filter(item =>
+        item && typeof item.expression === 'string' &&
+        typeof item.result === 'string' && Number.isFinite(item.ts)
+      ) : [];
+    } catch (e) {
+      // Recover gracefully if browser storage contains malformed JSON.
+      return [];
+    }
+  }
+
   function pushHistory(expression, result){
     try{
-      const raw = localStorage.getItem(STORAGE_KEY);
-      const arr = raw ? JSON.parse(raw) : [];
+      const arr = readHistory();
       arr.unshift({ expression, result, ts: Date.now() });
-      // keep last 50
-      const clipped = arr.slice(0,50);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(clipped));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(arr.slice(0,50)));
       renderHistory();
     }catch(e){
       console.error('History save failed', e);
@@ -57,8 +68,7 @@
 
   // Display history items
   function renderHistory(){
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const arr = raw ? JSON.parse(raw) : [];
+    const arr = readHistory();
     historyList.innerHTML = '';
     if(arr.length === 0){
       historyList.innerHTML = '<li class="small">No history yet</li>';
@@ -67,14 +77,24 @@
     arr.forEach(item => {
       const li = document.createElement('li');
       li.className = 'history-item';
-      li.innerHTML = `<div><div>${escapeHtml(item.expression)}</div><small>${new Date(item.ts).toLocaleString()}</small></div><div><strong>${escapeHtml(item.result)}</strong></div>`;
-      // clicking an item loads it back into expression
+      li.innerHTML = `<div><div>${escapeHtml(item.expression)}</div><small>${new Date(item.ts).toLocaleString()}</small></div><div class="history-result"><strong>${escapeHtml(item.result)}</strong><button type="button" class="history-delete" aria-label="Delete calculation ${escapeHtml(item.expression)}" title="Delete this calculation">×</button></div>`;
+      // Clicking the entry restores its result; deletion is a separate action.
       li.addEventListener('click', () => {
         expr = String(item.result);
         updateDisplay();
       });
+      li.querySelector('.history-delete').addEventListener('click', event => {
+        event.stopPropagation();
+        try {
+          const next = readHistory().filter(entry => entry.ts !== item.ts);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+        } catch (error) {
+          console.error('History delete failed', error);
+        }
+        renderHistory();
+      });
       historyList.appendChild(li);
-    })
+    });
   }
 
   function escapeHtml(s){
