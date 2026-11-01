@@ -1,36 +1,41 @@
-🧠 Smart Calculator
+# Futuristic Calculator
 
-A simple but powerful Smart Calculator built using web technologies. It can perform basic and advanced calculations quickly and smoothly with a clean user interface.
+A responsive browser-based calculator with a futuristic interface.
 
-🚀 Features
-➕ Basic arithmetic operations (add, subtract, multiply, divide)
-🧮 Smart input handling
-⚡ Fast and responsive design
-📱 Works on mobile and desktop
-🎯 Clean and user-friendly UI
-🛠️ Built With
-HTML
-CSS
-JavaScript
-📸 Preview
+## Features
 
-(Add a screenshot or GIF of your calculator here)
+- Calculator interface for arithmetic input
+- Keyboard support (where implemented in the current app)
+- Calculation history controls
+- Theme toggle
+- Copy-result control
+- Responsive layout
 
-📂 How to Use
-Clone this repository:
-git clone https://github.com/arnavpawar671-ctrl/calculator.git
-Open the folder:
-cd smart-calculator
-Run index.html in your browser
-💡 Future Ideas
-Dark mode 🌙
-History of calculations 📜
-Scientific calculator mode 🔬
-Keyboard support ⌨️
-👨‍💻 Author
+## Tech stack
 
-Made with 💙 by Arnav
+- HTML
+- CSS
+- JavaScript
 
-⭐ If you like this project
+## Run locally
 
-Give it a star ⭐ and feel free to fork it!
+```bash
+git clone https://github.com/11kzpk-1906/calculator.git
+cd calculator
+```
+
+Open `index.html` in a browser. No build step is required.
+
+## Project files
+
+- `index.html` — interface
+- `style.css` — styling
+- `script.js` — calculator behaviour
+
+## Development
+
+When changing calculator logic, test keyboard input, invalid expressions, repeated operations, history interactions, and mobile layout in a browser.
+
+## Author
+
+Arnav Pawar
