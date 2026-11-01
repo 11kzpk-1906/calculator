@@ -86,7 +86,7 @@
       li.querySelector('.history-delete').addEventListener('click', event => {
         event.stopPropagation();
         try {
-          const next = readHistory().filter(entry => entry.ts !== item.ts);
+          const next = readHistory().filter(entry => !(entry.ts === item.ts && entry.expression === item.expression && entry.result === item.result));
           localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
         } catch (error) {
           console.error('History delete failed', error);
