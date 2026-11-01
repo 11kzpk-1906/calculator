@@ -137,3 +137,41 @@ body.light{
 body.light .btn{color:#061028}
 body.light .title{color:#061028}
 body.light .icon-btn{color:#061028}
+
+
+/* Individual history actions */
+.history-result {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.history-delete {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1;
+}
+
+.history-delete:hover,
+.history-delete:focus-visible {
+  border-color: #ff6b86;
+  color: #ff6b86;
+}
+
+.history-delete:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+body.light .history-delete {
+  border-color: rgba(0, 0, 0, .18);
+}
